@@ -1,0 +1,8 @@
+---
+    - name: Check if GPG keys are present
+      stat:
+        path: "/etc/pki/rpm-gpg/{{ item.key }}"
+      register: gpg_key_check
+      loop: "{{ repos }}"
+
+

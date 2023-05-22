@@ -1,0 +1,20 @@
+---
+- name: Initial setup
+  become: true
+  gather_facts: no 
+  vars_files:
+    - "{{ playbook_dir }}/repo-vars.yaml"
+  hosts: "{{ mirror_host }}"
+  
+  tasks:
+    - name: Initializing the setup procedure....
+      ansible.builtin.import_role:
+        name: modify-vars
+
+    - name: Prompt to run initial sync
+      pause:
+        prompt: "Would you like to run the initial sync? (yes/no)"
+      register: run_initial_sync
+
+- ansible.builtin.import_playbook: reposync.yaml
+  when: run_initial_sync.user_input | default('no') | bool

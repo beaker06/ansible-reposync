@@ -1,0 +1,11 @@
+---
+# tasks file for directories
+ - name: import creating directories for gpgkeys
+   ansible.builtin.import_tasks: gpg-dir.yaml
+
+ - name: import	creating directories for gpgkeys
+   ansible.builtin.import_tasks: yumfile-dir.yaml
+
+ - name: import	creating directories for gpgkeys
+   ansible.builtin.import_tasks: repo-dir.yaml
+

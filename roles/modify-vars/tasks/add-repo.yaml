@@ -1,0 +1,66 @@
+---
+- name: Initialize repos list
+  set_fact:
+    repos: []
+
+- name: Prompt for repository information
+  block:
+    - name: Prompt for repository id
+      pause:
+        prompt: "Enter the id for repository"
+      register: repo_id
+
+    - name: Prompt for repository name
+      pause:
+        prompt: "Enter the name for repository"
+      register: repo_name
+
+    - name: Prompt for repository os
+      pause:
+        prompt: "Enter the os for repository"
+      register: repo_os
+
+    - name: Prompt for repository version
+      pause:
+        prompt: "Enter the version for repository"
+      register: repo_version
+
+    - name: Prompt for repository enabled
+      pause:
+        prompt: "Enter if you want the repository enabled"
+      register: repo_enabled
+
+    - name: Prompt for repository gpgkey
+      pause:
+        prompt: "Enter the gpgkey name for repository usually (RPM-GPG-KEY-xxxx): "
+      register: repo_key
+
+    - name: Prompt for repository baseurl
+      pause:
+        prompt: "Enter the baseurl for repository"
+      register: repo_baseurl
+
+    - name: Add repository information to list
+      set_fact:
+        repos: "{{ repos + [ { 'id': repo_id.user_input, 'name': repo_name.user_input, 'os': repo_os.user_input, 'version': repo_version.user_input, 'enabled': repo_enabled.user_input, 'key': repo_key.user_input, 'baseurl': repo_baseurl.user_input } ] }}"
+
+    - name: Prompt to add another repository
+      pause:
+        prompt: "Would you like to add another repository? (yes/no)"
+      register: add_another_repo
+
+    - name: Validate add_another_repo input
+      fail:
+        msg: "Invalid value for add_another_repo. Must be 'yes' or 'no'."
+      when: add_another_repo.user_input not in ['yes', 'no']
+  when: add_another_repo is not defined or add_another_repo.user_input == 'yes'
+
+- name: Append to repo-vars.yaml file
+  blockinfile:
+    path: "{{ playbook_dir }}/repo-vars.yaml"
+    block: |
+      {% for repo in repos %}
+      - id: {{ repo.id }}
+        name: {{ repo.name }}
+        # ... repeat for other repository fields ...
+      {% endfor %}

@@ -1,0 +1,49 @@
+repo_path: /comlink/repos
+
+#^^^^^^^^^^^CHANGE THIS TO THE PATH WHERE YOU WANT REPOS STORED. 
+# USE THE FORMAT "/PATH/TO/REPOS"
+
+mirror_host: localhost
+
+#NGINX WILL SHARE THE PATH IN THE REPO_PATH VARIABLE IF SHARE_NGINX IS MARKED YES!!!!!
+
+share_nginx: yes
+
+#^^^THIS NEEDS TO BE SET TO EITHER YES OR NO TO SHARE WITH NGINX
+#NGINX SHOULD BE INSTALLED PRIOR WITH THE YES OPTION.
+
+
+#Keep the formay below but feel free to add an remove repositories. The variables should remain the same though. 
+
+repos:
+#EPEL 8
+
+  - id: epel-8
+    name: epel
+    os: epel
+    version: 8
+    enable: 1
+    key: RPM-GPG-KEY-EPEL-8
+    baseurl: https://dl.fedoraproject.org/pub/epel/8/Everything/x86_64/
+
+# THIS NEEDS TO BE HERE IF YOU WANT TO UTILIZE THE INSTALL/SHARE NGINX FEATURE.
+#NGINX
+
+  - id: nginx
+    name: nginx
+    os: nginx
+    version: 8
+    enable: 1
+    key: nginx_signing.key
+    baseurl: https://nginx.org/packages/rhel/8/x86_64/
+
+#Template
+
+#  - id: 
+#    name: 
+#    os: 
+#    version: 
+#    enable: 
+#    key: 
+#    baseurl: 
+

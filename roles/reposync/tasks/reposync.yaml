@@ -1,0 +1,5 @@
+---
+    - name: Sync repositories to local mirror
+      command: "reposync --repoid={{ item.id }} --downloadcomps -p {{ repo_path }}/{{ item.os }}/{{ item.version }}/"
+      loop: "{{ repos }}"
+

@@ -1,0 +1,8 @@
+---
+    - name: Set permissions on "{{ repo_path }}" directory
+      file:
+        path: "{{ repo_path }}"
+        owner: nginx
+        group: nginx
+        recurse: yes
+

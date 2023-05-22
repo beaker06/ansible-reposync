@@ -1,0 +1,6 @@
+---
+ - name: Create directory for the gpgkeys
+   file:
+     path: "{{ repo_path }}/gpgkeys"
+     state: directory
+

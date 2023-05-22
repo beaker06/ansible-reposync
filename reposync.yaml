@@ -1,0 +1,44 @@
+---
+- name: create a mirror of repositories
+  hosts: "{{ mirror_host }}"
+  become: true
+  vars_files:
+    - "{{ playbook_dir }}/repo-vars.yaml"
+
+  tasks:
+    - name: Creating necessary directories
+      ansible.builtin.import_role: 
+        name: directories
+      tags:
+      - directory
+
+    - name: Check if GPG keys are present
+      ansible.builtin.import_role: 
+        name: gpgkeys
+      tags:
+      - gpgkeys
+
+    - name: Ensuring all files are present and in correct locations
+      ansible.builtin.import_role: 
+        name: repofiles
+      tags:
+      - repofiles
+
+    - name: Sync repositories to local mirror
+      ansible.builtin.import_role: 
+        name: reposync
+      tags:
+      - reposync
+
+    - name: Create repository metadata
+      ansible.builtin.import_role: 
+        name: createrepo
+      tags:
+      - createrepo
+
+    - name: Install Nginx
+      ansible.builtin.import_role:
+        name: nginx
+      when: share_nginx == 'yes'
+      tags:
+      - nginx

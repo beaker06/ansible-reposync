@@ -1,0 +1,4 @@
+---
+# tasks file for createrepo
+ - name: import createrepo tasks
+   ansible.builtin.import_tasks: createrepo.yaml

@@ -1,0 +1,5 @@
+---
+    - name: Create repository metadata
+      command: "createrepo_c {{ repo_path }}/{{ item.os }}/{{ item.version }}/{{ item.id }}"
+      loop: "{{ repos }}"
+

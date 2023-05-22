@@ -1,0 +1,7 @@
+---
+    - name: Check if .repo file exists in "{{ repo_path }}/yum-files"
+      stat:
+        path: "{{ repo_path }}/yum-files/{{ item.id }}.repo"
+      register: repo_file_check
+      loop: "{{ repos }}"
+

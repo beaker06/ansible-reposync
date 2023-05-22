@@ -1,0 +1,4 @@
+---
+# tasks file for reposync
+ - name: import reposync tasks
+   ansible.builtin.import_tasks: reposync.yaml

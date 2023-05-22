@@ -1,0 +1,12 @@
+---
+# tasks file for gpgkeys
+ - name: import gpgkey tasks
+   ansible.builtin.import_tasks: gpgcheck.yaml
+
+ - name: import gpgkey tasks
+   ansible.builtin.import_tasks: gpgadd.yaml
+
+ - name: import gpgkey tasks
+   ansible.builtin.import_tasks: gpgcopy.yaml
+
+

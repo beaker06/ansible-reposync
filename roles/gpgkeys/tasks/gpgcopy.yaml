@@ -1,0 +1,8 @@
+---
+    - name: Copy GPG keys to "{{ repo_path }}/gpgkeys"
+      copy:
+        src: "/etc/pki/rpm-gpg/{{ item.key }}"
+        dest: "{{ repo_path }}/gpgkeys/{{ item.key }}"
+        remote_src: yes
+      loop: "{{ repos }}"
+

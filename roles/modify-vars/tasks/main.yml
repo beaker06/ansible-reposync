@@ -1,0 +1,18 @@
+---
+# tasks file for add-repos
+- name: import the change-vars.yaml
+  ansible.builtin.import_tasks: change-vars.yaml
+
+- name: Prompt to add repos
+  pause:
+    prompt: "Would you like to add repos? (yes/no)"
+  register: add_repos
+
+- name: Validate add_repos input
+  fail:
+    msg: "Invalid value for add_repos. Must be 'yes' or 'no'."
+  when: add_repos.user_input not in ['yes', 'no']
+
+- name: Run add-repo.yml task from modify-vars role
+  ansible.builtin.import_tasks: add-repo.yaml
+  when: add_repos.user_input == 'yes'

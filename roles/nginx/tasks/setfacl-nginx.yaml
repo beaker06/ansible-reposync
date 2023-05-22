@@ -1,0 +1,4 @@
+---
+    - name: Run the setfacl on the directory
+      command: "setfacl -R -m u:nginx:rX {{ repo_path }}"
+

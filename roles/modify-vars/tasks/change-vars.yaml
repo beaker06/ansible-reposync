@@ -1,0 +1,58 @@
+---
+
+- name: Prompt for mirrow_host change
+  pause:
+    prompt: "Would you like to change the mirror_host variable in the repo-vars.yaml file? (yes/no)"
+  register: change_mirror_host
+
+- name: Prompt for new mirror_host
+  pause:
+    prompt: "Enter the new mirror_host (localhost if it is the host running the playbook)"
+  register: new_mirror_host
+  when: change_mirror_host.user_input == 'yes'
+
+- name: Update repo-vars.yaml with new mirror_host
+  lineinfile:
+    path: "{{ playbook_dir }}/repo-vars.yaml"
+    regexp: '^mirror_host:'
+    line: "mirror_host: {{ new_mirror_host.user_input }}"
+  when: change_mirror_host.user_input == 'yes'
+
+- name: Prompt for repo_path change
+  pause:
+    prompt: "Would you like to change the repo_path variable in the repo-vars.yaml file? (yes/no)"
+  register: change_repo_path
+
+- name: Validate change_repo_path input
+  fail:
+    msg: "Invalid value for change_repo_path. Must be 'yes' or 'no'."
+  when: change_repo_path.user_input not in ['yes', 'no']
+
+- name: Prompt for new repo_path
+  pause:
+    prompt: "Enter the new repo_path"
+  register: new_repo_path
+  when: change_repo_path.user_input == 'yes'
+
+- name: Update repo-vars.yaml with new repo_path
+  lineinfile:
+    path: "{{ playbook_dir }}/repo-vars.yaml"
+    regexp: '^repo_path:'
+    line: "repo_path: {{ new_repo_path.user_input }}"
+  when: change_repo_path.user_input == 'yes'
+
+- name: Prompt for nginx_share
+  pause:
+    prompt: "Would you like to share repos on nginx? (yes/no)"
+  register: nginx_share
+
+- name: Validate nginx_share input
+  fail:
+    msg: "Invalid value for nginx_share. Must be 'yes' or 'no'."
+  when: nginx_share.user_input not in ['yes', 'no']
+
+- name: Update repo-vars.yaml with nginx_share
+  lineinfile:
+    path: "{{ playbook_dir }}/repo-vars.yaml"
+    regexp: '^share_nginx:'
+    line: "share_nginx: {{ nginx_share.user_input }}"

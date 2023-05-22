@@ -1,0 +1,11 @@
+---
+    - name: Copy .repo file to /etc/yum.repos.d/ if it does not exist and disable repository by default
+      copy:
+        src: "{{ repo_path }}/yum-files/{{ item.item.id }}-external.repo"
+        dest: "/etc/yum.repos.d/{{ item.item.id }}-external.repo"
+        remote_src: yes
+      when:
+        - not item.stat.exists
+        - inventory_hostname == 'localhost'
+      loop: "{{ yum_repo_file_check.results }}"
+

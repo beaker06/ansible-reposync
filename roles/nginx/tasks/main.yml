@@ -1,0 +1,16 @@
+---
+# tasks file for nginx
+ - name: import install nginx task
+   ansible.builtin.include_tasks: install-nginx.yaml
+
+ - name: import copy nginx config file
+   ansible.builtin.include_tasks: config-nginx.yaml
+
+ - name: import	restart nginx service 
+   ansible.builtin.include_tasks: restart-nginx.yaml
+
+ - name: import	permissions for nginx
+   ansible.builtin.include_tasks: perms-nginx.yaml
+
+ - name: import	the setfacl tasks
+   ansible.builtin.include_tasks: setfacl-nginx.yaml

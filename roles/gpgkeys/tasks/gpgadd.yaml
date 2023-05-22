@@ -1,0 +1,8 @@
+---
+    - name: Add GPG keys if not present
+      rpm_key:
+        key: "{{ item.item.key }}"
+        state: present
+      when: not item.stat.exists
+      loop: "{{ gpg_key_check.results }}"
+
