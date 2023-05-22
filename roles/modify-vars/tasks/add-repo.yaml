@@ -62,5 +62,9 @@
       {% for repo in repos %}
       - id: {{ repo.id }}
         name: {{ repo.name }}
-        # ... repeat for other repository fields ...
+        os: {{ repo.os }}
+        version: {{ repo.version }}
+        enabled: {{ repo.enabled }}
+        gpgkey: {{ repo.key }}
+        baseurl: {{ repo.baseurl }}
       {% endfor %}
