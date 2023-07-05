@@ -9,5 +9,8 @@
  - name: import	create local repo
    ansible.builtin.import_tasks: create-local-repo.yaml
 
+ - name: import	reposync config repo
+   ansible.builtin.import_tasks: create-reposync-cfg.yaml 
+
  - name: import	check repofile
    ansible.builtin.import_tasks: check-repo.yaml

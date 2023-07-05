@@ -1,0 +1,41 @@
+---
+    - name: generate the repo variable by parsing out the i686 packages
+      shell: find {{ base_path }} | grep i686 | grep /x86_64 | tr '/' ' ' | awk '{print $3, $4, $5}' | tr ' ' '/' | uniq | grep -wv "foreman" | grep -wv ".cache" | grep -wv "i686"
+      register: repos
+
+    - name: debug
+      debug:
+        msg: "{{ repos.stdout_lines }}"
+
+    - name: Find i686 packages
+      shell: find {{ base_path }}/{{ item }}/x86_64 | grep "i686.rpm"
+      register: i686_packages
+      with_items: "{{ repos.stdout_lines }}"
+
+    - name: Display message if no i686 packages found
+      debug:
+          msg: "No i686 packages found in {{ item.item }} repository"
+      when: item.item | length == 0
+      with_items: "{{ i686_packages.results }}"
+
+    - name: Create i686 directories
+      file:
+        path: "{{ base_path }}/{{ item }}/i686/Packages"
+        state: directory
+      when: i686_packages.results | length > 0
+      with_items: "{{ repos.stdout_lines }}"
+
+    - name: Move i686 packages
+      shell: find {{ base_path }}/{{ item }}/x86_64/Packages -name '*.i686.rpm' -exec rsync --remove-source-files -av {} {{ base_path }}/{{ item }}/i686/Packages/ \;
+      when: i686_packages.results | length > 0
+      with_items: "{{ repos.stdout_lines }}"
+
+    - name: Create repo metadata for x86_64
+      shell: "createrepo {{ base_path }}/{{ item }}/x86_64"
+      with_items: "{{ repos.stdout_lines }}"
+
+    - name: Create repo metadata for i686
+      shell: "createrepo {{ base_path }}/{{ item }}/i686"
+      when: i686_packages.results | length > 0
+      with_items: "{{ repos.stdout_lines }}"
+

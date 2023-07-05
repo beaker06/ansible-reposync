@@ -37,12 +37,22 @@
 
     - name: Prompt for repository baseurl
       pause:
+        prompt: "Enter the base for repository (i.e.: centosplus, PowerTools, etc.)"
+      register: repo_base
+
+    - name: Prompt for repository baseurl
+      pause:
+        prompt: "Enter the architecture for repository (x86_64, i686, etc)"
+      register: repo_arch
+
+    - name: Prompt for repository baseurl
+      pause:
         prompt: "Enter the baseurl for repository"
       register: repo_baseurl
 
     - name: Add repository information to list
       set_fact:
-        repos: "{{ repos + [ { 'id': repo_id.user_input, 'name': repo_name.user_input, 'os': repo_os.user_input, 'version': repo_version.user_input, 'enabled': repo_enabled.user_input, 'key': repo_key.user_input, 'baseurl': repo_baseurl.user_input } ] }}"
+        repos: "{{ repos + [ { 'id': repo_id.user_input, 'name': repo_name.user_input, 'os': repo_os.user_input, 'base': repo_base.user_input, 'version': repo_version.user_input, 'enabled': repo_enabled.user_input, 'key': repo_key.user_input, 'arch': repo_arch.user_input, 'baseurl': repo_baseurl.user_input } ] }}"
 
     - name: Prompt to add another repository
       pause:

@@ -1,0 +1,8 @@
+--- 
+ - name: set the permissions
+   file: 
+     path: {{ repo_path }}
+     owner: {{ dir_owner }}
+     group: {{ dir_grp }}
+     mode: {{ perm }}
+     recurse: {{ recursive }}

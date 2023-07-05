@@ -1,5 +1,11 @@
----
-    - name: Sync repositories to local mirror
-      command: "reposync --repoid={{ item.id }} --downloadcomps -p {{ repo_path }}/{{ item.os }}/{{ item.version }}/"
-      loop: "{{ repos }}"
+- name: Loop through files in {{ repo_path }}/yum-files/repo-conf
+  include_vars:
+    file: "{{ item }}"
+    name: repo_vars
+  with_fileglob:
+    - "{{ repo_path }}/yum-files/repo-conf/*"
+  register: include_vars_result
 
+- name: Run reposync command
+  command: "reposync --repoid={{ repo_vars.id }} --downloadcomps -p {{ repo_path }}/{{ repo_vars.os }}/{{ repo_vars.version }}/{{ repo_vars.base }}/{{ repo_vars.arch }}/ --repofrompath={{ repo_vars.id }},{{ repo_vars.baseurl }} --norepopath"
+  with_items: "{{ include_vars_result.results }}"

@@ -1,0 +1,12 @@
+---
+    - name: Create reposync config file if it does not exist
+      copy:
+        content: |
+          id: {{ item.id }}
+          os: {{ item.os }}
+          version: {{ item.version }}
+          base: {{ item.base }}
+          arch: {{ item.arch }}
+          baseurl: {{ item.baseurl }}
+        dest: "{{ repo_path }}/yum-files/repo-conf/{{ item.id }}-{{ item.version }}.conf"
+      loop: "{{ repos }}"

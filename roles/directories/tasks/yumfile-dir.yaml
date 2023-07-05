@@ -4,3 +4,17 @@
      path: "{{ repo_path }}/yum-files"
      state: directory
 
+ - name: Create directory for the yum-files
+   file:
+     path: "{{ repo_path }}/yum-files/repo-conf"
+     state: directory
+
+ - name: Create directory for the yum-files
+   file:
+     path: "{{ repo_path }}/yum-files/external"
+     state: directory
+
+ - name: Create directory for the yum-files
+   file:
+     path: "{{ repo_path }}/yum-files/internal"
+     state: directory

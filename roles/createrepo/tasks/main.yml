@@ -1,4 +1,7 @@
 ---
 # tasks file for createrepo
+ - name: import dependency install tasks
+   ansible.builtin.import_tasks: dep-install.yaml
+ 
  - name: import createrepo tasks
    ansible.builtin.import_tasks: createrepo.yaml

@@ -1,0 +1,11 @@
+---
+- name: Check for NGINX GPG key
+  stat:
+    path: /etc/pki/rpm-gpg/nginx_signing.key
+  register: nginx_key
+
+- name: Download NGINX GPG key
+  get_url:
+    url: https://nginx.org/keys/nginx_signing.key
+    dest: /etc/pki/rpm-gpg/nginx_signing.key
+  when: not nginx_key.stat.exists

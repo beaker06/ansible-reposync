@@ -6,11 +6,25 @@
     - "{{ playbook_dir }}/repo-vars.yaml"
 
   tasks:
+    - name: import nginx variales if share_nginx is true
+      include_vars: "{{ playbook_dir }}/nginx-vars.yaml"
+      when: share_nginx == 'yes'
+      tags:
+      - nginx
+
     - name: Creating necessary directories
       ansible.builtin.import_role: 
         name: directories
       tags:
-      - directory
+      - directories
+      
+    - name: Checks the nginx keys if nginx is wanted
+      ansible.builtin.import_role:
+        name: nginx
+        tasks_from: pull-gpg-nginx.yaml
+      when: share_nginx == 'yes'
+      tags:
+      - nginx
 
     - name: Check if GPG keys are present
       ansible.builtin.import_role: 
@@ -24,6 +38,11 @@
       tags:
       - repofiles
 
+    - name: install the yum-utils and createrepo_c for reposync and createrepo tools
+      ansible.builtin.import_role:
+        name: createrepo
+        tasks_from: dep-install.yaml
+
     - name: Sync repositories to local mirror
       ansible.builtin.import_role: 
         name: reposync
@@ -35,6 +54,13 @@
         name: createrepo
       tags:
       - createrepo
+
+    - name: Separate any i686 packages if they are mixed with 64 bit. 
+      ansible.builtin.import_role:
+        name: i686-sep
+      when: separate_i686 == 'yes'
+      tags:
+      - i686
 
     - name: Install Nginx
       ansible.builtin.import_role:

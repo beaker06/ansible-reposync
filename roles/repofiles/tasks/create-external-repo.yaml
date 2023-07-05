@@ -3,12 +3,12 @@
       copy:
         content: |
           [{{ item.item.id }}]
-          name={{ item.item.name }}
+          name={{ item.item.name }}-{{ item.item.base }}
           baseurl={{ item.item.baseurl }}
           enabled={{ item.item.enable }}
           gpgcheck=1
           gpgkey=file://{{ repo_path }}/gpgkeys/{{ item.item.key }}
-        dest: "{{ repo_path }}/yum-files/{{ item.item.id }}-external.repo"
+        dest: "{{ repo_path }}/yum-files/external/{{ item.item.name }}-{{ item.item.version }}-{{ item.item.base }}-external.repo"
       when: not item.stat.exists
       loop: "{{ repo_file_check.results }}"
 

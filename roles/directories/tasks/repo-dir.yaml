@@ -1,7 +1,7 @@
 ---
  - name: Create directories for repositories
    file:
-     path: "{{ repo_path }}/{{ item.os }}/{{ item.version }}/"
+     path: "{{ repo_path }}/{{ item.os }}/{{ item.version }}/{{ item.base }}/{{ item.arch }}"
      state: directory
    loop: "{{ repos }}"
 

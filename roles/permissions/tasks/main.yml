@@ -1,0 +1,4 @@
+---
+# tasks file for permissions
+ - name: import install nginx task
+   ansible.builtin.include_tasks: permissions.yml

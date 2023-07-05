@@ -1,0 +1,4 @@
+---
+# tasks file for i686-sep
+ - name: import install nginx task
+   ansible.builtin.include_tasks: i686-sync-tasks.yml

@@ -1,0 +1,6 @@
+---
+ - name: install yum utils
+   dnf:
+    name: yum-utils
+    state: present
+   when: ansible_os_family == "RedHat"

@@ -1,0 +1,11 @@
+# THIS NEEDS TO BE HERE IF YOU WANT TO UTILIZE THE INSTALL/SHARE NGINX FEATURE.
+#NGINX
+
+  - id: nginx
+    name: nginx
+    os: nginx
+    version: 8
+    enable: 1
+    key: nginx_signing.key
+    baseurl: https://nginx.org/packages/rhel/8/x86_64/
+

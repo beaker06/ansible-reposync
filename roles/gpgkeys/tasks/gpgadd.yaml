@@ -3,6 +3,16 @@
       rpm_key:
         key: "{{ item.item.key }}"
         state: present
-      when: not item.stat.exists
+      when: 
+      - not item.stat.exists
+      - ansible_os_family == "RedHat"
       loop: "{{ gpg_key_check.results }}"
 
+    - name: Add GPG keys if not present
+      apt_key:
+        key: "{{ item.item.key }}"
+        state: present
+      when: 
+      - not item.stat.exists
+      - ansible_os_family == "Debian"
+      loop: "{{ gpg_key_check.results }}"

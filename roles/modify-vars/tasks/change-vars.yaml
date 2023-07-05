@@ -56,3 +56,19 @@
     path: "{{ playbook_dir }}/repo-vars.yaml"
     regexp: '^share_nginx:'
     line: "share_nginx: {{ nginx_share.user_input }}"
+
+- name: Prompt for separate-i686
+  pause:
+    prompt: "Would you like to separate i686 (32 bit) repos from x86_64 (64 bit) repos? (yes/no)"
+  register: sep-i686
+
+- name: Validate sep-i686 input
+  fail:
+    msg: "Invalid value for sep-i686. Must be 'yes' or 'no'."
+  when: sep-i686.user_input not in ['yes', 'no']
+
+- name: Update repo-vars.yaml with sep-i686
+  lineinfile:
+    path: "{{ playbook_dir }}/repo-vars.yaml"
+    regexp: '^separate-i686:'
+    line: "separate-i686: {{ sep-i686.user_input }}"
