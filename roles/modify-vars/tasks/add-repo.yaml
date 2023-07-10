@@ -1,4 +1,4 @@
----
+'---
 - name: Initialize repos list
   set_fact:
     repos: []
@@ -35,12 +35,12 @@
         prompt: "Enter the gpgkey name for repository usually (RPM-GPG-KEY-xxxx): "
       register: repo_key
 
-    - name: Prompt for repository baseurl
+    - name: Prompt for repository base
       pause:
         prompt: "Enter the base for repository (i.e.: centosplus, PowerTools, etc.)"
       register: repo_base
 
-    - name: Prompt for repository baseurl
+    - name: Prompt for repository architecture
       pause:
         prompt: "Enter the architecture for repository (x86_64, i686, etc)"
       register: repo_arch
@@ -68,13 +68,15 @@
 - name: Append to repo-vars.yaml file
   blockinfile:
     path: "{{ playbook_dir }}/repo-vars.yaml"
-    block: |
+    block: |2
       {% for repo in repos %}
-      - id: {{ repo.id }}
-        name: {{ repo.name }}
-        os: {{ repo.os }}
-        version: {{ repo.version }}
-        enabled: {{ repo.enabled }}
-        gpgkey: {{ repo.key }}
-        baseurl: {{ repo.baseurl }}
+        - id: {{ repo.id }}
+          name: {{ repo.name }}
+          os: {{ repo.os }}
+          base: {{ repo.base }}
+          version: {{ repo.version }}
+          enabled: {{ repo.enabled }}
+          arch: {{ repo.arch }}
+          key: {{ repo.key }}
+          baseurl: {{ repo.baseurl }}
       {% endfor %}

@@ -4,8 +4,8 @@
         content: |
           [{{ item.id }}]
           name={{ item.name }}-{{ item.base }}
-          baseurl=http://localhost{{ repo_path }}/{{ item.os }}/{{ item.version }}/{{ item.base }}/{{ item.arch }}/packages/
-          enabled={{ item.enable }}
+          baseurl=http://localhost{{ repo_path }}/{{ item.os }}/{{ item.version }}/{{ item.base }}/{{ item.arch }}
+          enabled={{ item.enabled }}
           gpgcheck=1
           gpgkey=file://{{ repo_path }}/gpgkeys/{{ item.key }}
         dest: "{{ repo_path }}/yum-files/internal/{{ item.name }}-{{ item.version }}-{{ item.base }}-local.repo"

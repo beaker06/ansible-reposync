@@ -1,7 +1,7 @@
 ---
     - name: Check if .repo file exists in /etc/yum.repos.d/
       stat:
-        path: "/etc/yum.repos.d/{{ item.id }}-external.repo"
+        path: "/etc/yum.repos.d/{{ item.name }}-{{ item.version }}-{{ item.base }}-external.repo"
       register: yum_repo_file_check
       loop: "{{ repos }}"
 

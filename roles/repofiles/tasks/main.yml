@@ -1,8 +1,5 @@
 ---
 # tasks file for repofiles
- - name: import check repofile
-   ansible.builtin.import_tasks: checkfile.yaml
-
  - name: import	create external repo
    ansible.builtin.import_tasks: create-external-repo.yaml
 

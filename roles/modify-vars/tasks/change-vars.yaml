@@ -1,6 +1,6 @@
 ---
 
-- name: Prompt for mirrow_host change
+- name: Prompt for mirror_host change
   pause:
     prompt: "Would you like to change the mirror_host variable in the repo-vars.yaml file? (yes/no)"
   register: change_mirror_host
@@ -55,20 +55,20 @@
   lineinfile:
     path: "{{ playbook_dir }}/repo-vars.yaml"
     regexp: '^share_nginx:'
-    line: "share_nginx: {{ nginx_share.user_input }}"
+    line: "share_nginx: "{{ nginx_share.user_input }}""
 
-- name: Prompt for separate-i686
+- name: Prompt for separate_i686
   pause:
     prompt: "Would you like to separate i686 (32 bit) repos from x86_64 (64 bit) repos? (yes/no)"
-  register: sep-i686
+  register: sep_i686
 
-- name: Validate sep-i686 input
+- name: Validate sep_i686 input
   fail:
-    msg: "Invalid value for sep-i686. Must be 'yes' or 'no'."
-  when: sep-i686.user_input not in ['yes', 'no']
+    msg: "Invalid value for sep_i686. Must be 'yes' or 'no'."
+  when: sep_i686.user_input not in ['yes', 'no']
 
-- name: Update repo-vars.yaml with sep-i686
+- name: Update repo-vars.yaml with sep_i686
   lineinfile:
     path: "{{ playbook_dir }}/repo-vars.yaml"
-    regexp: '^separate-i686:'
-    line: "separate-i686: {{ sep-i686.user_input }}"
+    regexp: '^separate_i686:'
+    line: "separate_i686: "{{ sep_i686.user_input }}""

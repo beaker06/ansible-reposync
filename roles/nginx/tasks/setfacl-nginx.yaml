@@ -1,4 +1,4 @@
 ---
     - name: Run the setfacl on the directory
-      command: "setfacl -R -m u:nginx:rX {{ repo_path }}"
-
+      command: "setfacl -R -m u:nginx:rx {{ repo_path }}"
+      ignore_errors: true

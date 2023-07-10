@@ -7,9 +7,10 @@ mirror_host: localhost
 
 #NGINX WILL SHARE THE PATH IN THE REPO_PATH VARIABLE IF SHARE_NGINX IS MARKED YES!!!!!
 
-share_nginx: yes
+share_nginx: "no"
+#NOTE This will not fully work if you are using an NFS share such as TrueNAS. The ACL for NGINX user has to be set within TrueNAS. 
 
-separate_i686: yes
+separate_i686: "yes"
 
 #PERMISSIONS
 dir_owner: root
@@ -19,7 +20,6 @@ recursive: yes
 
 #^^^THIS NEEDS TO BE SET TO EITHER YES OR NO TO SHARE WITH NGINX
 #NGINX SHOULD BE INSTALLED PRIOR WITH THE YES OPTION.
-
 
 #Keep the formay below but feel free to add an remove repositories. The variables should remain the same though. 
 
@@ -32,7 +32,7 @@ repos:
     base: epel
     version: 8
     arch: x86_64
-    enable: 1
+    enabled: 1
     key: RPM-GPG-KEY-EPEL-8
     baseurl: https://dl.fedoraproject.org/pub/epel/8/Everything/x86_64/
 
@@ -56,4 +56,3 @@ repos:
 #    enable: 
 #    key: 
 #    baseurl: 
-
